@@ -28,7 +28,7 @@ const siteContent = {
   },
   "contact": {
     "contact-h4" : "Contact",
-    "address" : "123 Way 456 Street <br> Somewhere, USA",
+    "address" : "123 Way 456 Street Somewhere, USA",
     "phone" : "1 (888) 888-8888",
     "email" : "sales@greatidea.io",
   },
@@ -43,7 +43,8 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 
 // Add cta text on h1
 const cta_text_h1 = document.querySelector('.cta-text h1');
-cta_text_h1.innerHTML = 'DOM<br> Is<br> Awesome'
+const addBR = string => string.split(" ").join("<br> ");
+cta_text_h1.innerHTML = addBR(siteContent.cta.h1);
 
 // Add cta text on button
 const cta_text_button = document.querySelector('.cta-text button');
@@ -53,21 +54,38 @@ cta_text_button.textContent = siteContent.cta.button;
 const cta_text_img = document.getElementById('cta-img');
 cta_text_img.src = siteContent.cta["img-src"];
 
-// Add new item in nav bar
-const navBar = document.querySelector('nav');
-const addElement = document.createElement('a');
-addElement.href = '#';
-addElement.textContent = 'Company'
-console.log(addElement)
-navBar.appendChild(addElement);
-console.log(navBar);
-
 // Add text and color green in nav elements
 const navBarElements = document.querySelectorAll('.container header nav a');
 for(let i = 0; i < navBarElements.length; i++) {
   navBarElements[i].textContent = siteContent.nav[`nav-item-${i+1}`]
-  navBarElements[i].style.color = 'green';
 }
+
+// Add new item in nav bar
+const navBar = document.querySelector('nav');
+const addElement = document.createElement('a');
+const addElement2 = document.createElement('a');
+addElement.textContent = 'Lambda';
+addElement.href = '#';
+addElement2.textContent = 'Company';
+addElement2.href = '#';
+navBar.prepend(addElement2);
+navBar.appendChild(addElement);
+
+const navElements = document.querySelectorAll('nav a');
+
+//Change nav elements color to green 
+for(let i = 0; i < navElements.length; i++) {
+  navElements[i].style.color = 'green';
+}
+
+
+// Change color clicking button
+const cta_button = document.querySelector('.cta .cta-text button');
+const cta_h1 = document.querySelector('.cta .cta-text h1');
+function changeColor(){
+  cta_h1.style.color = 'green';
+}
+cta_button.addEventListener('click', changeColor);
 
 // Add text in class text-content
 const text_content_h4 = document.querySelectorAll('.text-content h4');
@@ -92,7 +110,14 @@ logo_middle.src = siteContent["main-content"]["middle-img-src"];
 const contact_title = document.querySelector('.contact h4');
 contact_title.textContent = siteContent.contact["contact-h4"];
 const contact_p = document.querySelectorAll('.contact p');
-contact_p[0].innerHTML = '123 Way 456 Street<br>Somewhere, USA'
+
+const createArr = (string) => string.split(' ')
+const arr = createArr(siteContent.contact.address);
+arr.splice(3, 0, '<br>');
+
+for(let i = 0; i < arr.length; i++) {
+  contact_p[0].innerHTML += `${arr[i]} `;
+}
 contact_p[1].textContent = siteContent.contact.phone;
 contact_p[2].textContent = siteContent.contact.email;
 
